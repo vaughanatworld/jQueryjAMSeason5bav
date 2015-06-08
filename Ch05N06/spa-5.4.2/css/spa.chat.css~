@@ -1,0 +1,186 @@
+/*
+ * spa.chat.css
+ * Chat feature styles
+ */
+
+/* 
+ *  class spa-chat for chat slider. Included subtle drop shadows.
+ *  Like all other Chat selectors, have converted to relative units.
+ */
+ .spa-chat {
+  position      : absolute;
+  bottom        : 0;
+  right         : 0;
+  width         : 25em;
+  height        : 2em;
+  background    : #fff;
+  border-radius : 0.5em 0 0 0;
+  border-style  : solid;
+  border-width  : thin 0 0 thin;
+  border-color  : #888
+  box-shadow    : 0 0 0.75em 0 #888;
+  z-index       : 1;
+}
+
+/*
+ * Add common rules for both the spa-chat-head and spa-chat-closer classes.
+ * DRY Don't Repeat Yourself maxim
+ */
+.spa-chat-head, .spa-chat-closer {
+  position      : absolute;
+  top           : 0;
+  height        : 2em;
+  line-height   : 1.8em;
+  border-bottom : thin solid #888;
+  cursor        : pointer;
+  background    : #888;
+  color         : white;
+  font-family   : arial, helvetica, sans-serif;
+  font-weight   : 800;
+  text-align    : center;
+}
+
+/*
+ * Add the unique rules in expectation this class will contain
+ * spa-chat-head-toggle and spa-chat-head-title class elements.
+ */
+.spa-chat-head {
+  left          : 0;
+  right         : 2em;
+  border-radius : 0.3em 0 0 0;
+}
+
+/* 
+ * Class provides a little [x] on the top-right corner. Note: this
+ * isn't contained in the header. Want header to be a hotspot for
+ * opening and closing the slider. The closer has a differnet
+ * function. Also added a derived :hover pseudo-class to highlight
+ * the element when the cursor is over it.
+ */
+.spa-chat-closer {
+  right         : 0;
+  width         : 2em;
+}
+  .spa-chat-closer:hover {
+    background  : #800;
+  }
+
+/*
+ * Class for the toggle button. Element is contained within an
+ * element called spa-chat-head class.
+ */
+.spa-chat-head-toggle {
+  position      : absolute;
+  top           : 0;
+  left          : 0;
+  width         : 2em;
+  bottom        : 0;
+  border-radius : 0.3em 0 0 0;
+}
+
+/*
+ * Class contained within the spa-chat-head class. Use standard
+ * "negative margin" trick to center the element (Google for details)
+ */
+.spa-chat-head-title {
+  position      : absolute;
+  left          : 50%;
+  width         : 16em;
+  margin-left   : -8em;
+}
+
+/*
+ * Class provided so we can have a fixed-size element to
+ * contain slider contents
+ */
+.spa-chat-sizer {
+  position      : absolute;
+  top           : 2em;
+  left          : 0;
+  right         : 0;
+}
+
+/* Element where we expect cat messages to be displayed.
+ * Hide the overflow on the x-axis and provide a vertical
+ * scrollbar always. (Could have used overflow-y: auto but that
+ * causes a jarring text flow problem when the scrollbar appears)
+ */
+.spa-chat-msgs {
+  position      : absolute:
+  top           : 1em;
+  left          : 1em;
+  right         : 1em;
+  bottom        : 4em;
+  padding       : 0.5em;
+  border        : thin solid #888;
+  overflow-x    : hidden;
+  overflow-y    : scroll;
+}
+
+/* Class for an element expected to contain an input
+ * field and the Send button.
+ */
+.spa-chat-box {
+  position      : absolute;
+  height        : 2em;
+  left          : 1em;
+  right         : 1em;
+  bottom        : 1em;
+  border        : thin solid #888;
+  background    : #888;
+}
+
+/* Define a rule that styles "any text input inside
+ * any element with the .spa-chat-box class". This is
+ * our chat input field.
+ */
+.spa-chat-box input[type=text] {
+  float         : left;
+  width         : 75%;
+  height        : 100%;
+  padding       : 0.5em;
+  border        : 0;
+  background    : #ddd;
+  color         : $404040;
+}
+  /*
+   * Derived :focus pseudo-class to increase contrast once
+   * a user selects the input.
+   */
+  .spa-chat-box input[type=text]:focus {
+    background  : #fff;
+  }
+
+/*
+ * Rule that styles "any div element inside the 
+ * .spa-chat-box class". By design, this is our Send
+ * button.
+ */
+.spa-chat-box div {
+  float         : left;
+  width         : 25%;
+  height        : 2em;
+  line-height   : 1.9em;
+  text-align    : center;
+  color         : #fff;
+  font-weight   : 800;
+  cursor        : pointer;
+}
+  /*
+   * Derived :hover pseudo-class highlights
+   * the Send button when the user hovers the mouse
+   * over it
+   */
+  .spa-chat-box div:hover {
+    background-color : #444;
+    color       : #ff0;
+  }
+
+/*
+ * Define selector that highlights the element
+ * spa-chat-head-toggle whenever the cursor hovers
+ * anywhere over an element of the spa-chat-head class.
+ */
+.spa-chat-head:hover .spa-chat-head-toggle {
+  background    : #aaa;
+}
