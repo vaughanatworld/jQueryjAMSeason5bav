@@ -108,3 +108,39 @@ peopleDb().each(function(person, idx){console.log( person.id + ' ' + person.name
 
 spa.model.chat.join();
 
+//-------------------------------------------------------------------
+// listing 6.7 Test the exchange of messages.
+
+var $t = $('<div/>');
+
+$.gevent.subscribe ( $t, 'spa-login', function( event, user ) { console.log ( 'Hello!', user.name); });
+$.gevent.subscribe ( $t, 'spa-updatechat', function( event, chat_map ) { console.log( 'Chat message:', chat_map); });
+$.gevent.subscribe ( $t, 'spa-setchatee', function( event, chatee_map ) { console.log( 'Chatee change:', chatee_map); });
+$.gevent.subscribe ( $t, 'spa-listchange', function( event, changed_list ) { console.log( '*Listchange:', changed_list); });
+
+spa.model.people.login( 'Fanny' );
+spa.model.chat.send_msg( 'Hi Pebbles!' );
+spa.model.chat.send_msg( 'What is up, tricks?' );
+spa.model.chat.set_chatee( 'id_03' );
+spa.model.chat.send_msg( 'Hi Pebbles!' );
+
+//-------------------------------------------------------------------
+// listing 6.10 Test the update_avatar method
+
+var $t = $('<div/>');
+
+$.gevent.subscribe( $t, 'spa-login', function ( event, user ) { console.log('Hello!', user.name);});
+$.gevent.subscribe( $t, 'spa-listchange', function (event, changed_list ) { console.log( '*Listchange:', changed_list ); });
+
+spa.model.people.login( 'Jessy' );
+
+var person = spa.model.people.get_by_cid ( 'id_03' );
+
+JSON.stringify( person.css_map );
+
+spa.model.chat.update_avatar({person_id : 'id_03', css_map : {} });
+
+person = spa.model.people.get_by_cid( 'id_03' );
+JSON.stringify (person.css_map);
+
+
