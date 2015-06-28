@@ -1,5 +1,6 @@
 /*
  * app.js - Simple Express serve with logging and middleware
+ *          Also has Testing code from Appendix B
  */
 
 /*jslint          node    : true,   continue  : true,

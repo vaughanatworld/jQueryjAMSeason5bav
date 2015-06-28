@@ -28,7 +28,8 @@ spa.model = (function () {
     isFakeData = true,
 
     personProto, makeCid, clearPeopleDb, completeLogin,
-    makePerson, removePerson, people, chat, initModule;
+    makePerson, removePerson, people, chat, initModule,
+    setDataMode;
 
 
   personProto = {
@@ -466,8 +467,13 @@ spa.model = (function () {
 
   };
 
+  setDataMode = function( arg_str ) {
+    isFakeData = arg_str === 'fake' ? true : false;
+  }
+  
   return {
     initModule  : initModule,
+    setDataMode : setDataMode,
     chat        : chat,
     people      : people
   };

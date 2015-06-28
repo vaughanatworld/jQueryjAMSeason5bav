@@ -382,6 +382,14 @@ spa.shell = (function () {
   // Returns    : none
   // Throws     : none
   initModule = function ( $container ) {
+    var data_mode_str;
+
+    // set data to fake if URI query argument set.
+    data_mode_str
+      = window.location.search === '?fake'
+        ? 'fake' : 'live';
+    spa.model.setDataMode( data_mode_str );
+
     // load HTML and map jQuery collections
     stateMap.$container = $container;
     $container.html( configMap.main_html );

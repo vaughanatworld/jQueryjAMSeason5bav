@@ -1,0 +1,151 @@
+// bav.test
+//
+// Listing 5.17 Test sign-in and sign-out using the JavaScript console.
+
+// create a jQuery collection $t that is not attached to the browser
+// document. Used for event testing.
+$t = $('<div/>');
+
+// $t subscribes to global custom events with test functions.
+// Have $t  jQuery collection subscribe to the spa-login event
+// with a function that prints "Hello!" and the list of arguements
+// to the console.
+$.gevent.subscribe( $t, 'spa-login', function () {
+    console.log( 'Hello!', arguments ); });
+
+// Have $t jQuery collection subscribe to the spa-logout event
+// with a function that prints "!Goodbye" and the list of arguments
+// to the console.
+$.gevent.subscribe( $t, 'spa-logout', function () {
+    console.log( '!Goodbye', arguments ); });
+
+// get the current user object
+var currentUser = spa.model.people.get_user();
+
+// confirm it is anonymous
+currentUser.get_is_anon();
+// >> true
+
+// get the people collection
+var peopleDb = spa.model.people.get_db();
+
+// show the names of all people in our list
+peopleDb().each(function(person,idx){console.log(person.id + ' ' + person.cid + ' ' + person.name);});
+
+peopleDb().each(function(person, idx){console.log(person.name);});
+// >> anonymous
+// >> Betty
+// >> Mike
+// >> Pebbles
+// >> Wilma
+
+// sign-in as 'Alfred'; get current user within 3s!
+spa.model.people.login( 'Alfred' );
+currentUser = spa.model.people.get_user();
+
+// Confirm the current user is no longer anonymous
+currentUser.get_is_anon();
+// >> false
+
+// inspect the current user id and cid
+currentUser.id;
+// >> undefined
+currentUser.cid;
+// >> "c0"
+
+// wait 3s ...and the spa-login event will publish. This invokes
+// the function we subscribe on the $t jQuery collection to the 
+// spa-login event and so we see the "Hello!" message along with
+// the list of arguments
+// >> Hello! > [jQuery.Event, Object]
+
+// revisit the people collection
+peopleDb().each(function(person, idx){console.log(perons.name);});
+// >> anonymous
+// >> Betty
+// >> Mike
+// >> Pebbles
+// >> Wilma
+// >> Alfred
+
+// sign-out and watdch for the event. Does some house cleaning
+// and publishes the spa-logout event almost immediately. This
+// invokes the function we subscribed on the $t jQuery collection
+// to spa-logout event, and so we see the "!Goodby" message
+// along with the list of arguments.
+spa.model.people.logout()
+// >> !Goodbye [jQuery.Event, Object]
+
+// look at the people collection again and the current user.
+peopleDb().each(function(person, idx){console.log(person.name);});
+// >> anonymous
+// >> Betty
+// >> Mike
+// >> Pebbles
+// >> Wilma
+
+currentUser = spa.model.people.get_user();
+currentUser.get_is_anon();
+// >> true
+
+//-------------------------------------------------------------------
+// listing 6.4 Test spa.model.chat.join() without a UI or server.
+
+var $t = $('<div/>');
+.gevent.subscribe( $t, 'spa-login', function () { console.log( 'Hello!', arguments ); });
+.gevent.subscribe( $t, 'spa-listchange', function () { console.log( '*Listchange', arguments ); });
+
+var currentUser = spa.model.people.get_user();
+currentUser.get_is_anon();
+
+spa.model.chat.join();
+
+spa.model.people.login( 'Fred' );
+
+var peopleDb = spa.model.people.get_db();
+
+peopleDb().each(function(person, idx){console.log( person.id + ' ' + person.name);});
+
+spa.model.chat.join();
+
+//-------------------------------------------------------------------
+// listing 6.7 Test the exchange of messages.
+
+// for App0B testing of chat.
+file:///C:/aaa/SPA/ProjectsBAV/App0B/B.4.3/public/spa.html?fake
+
+var $t = $('<div/>');
+
+$.gevent.subscribe ( $t, 'spa-login', function( event, user ) { console.log ( 'Hello!', user.name); });
+$.gevent.subscribe ( $t, 'spa-updatechat', function( event, chat_map ) { console.log( 'Chat message:', chat_map); });
+$.gevent.subscribe ( $t, 'spa-setchatee', function( event, chatee_map ) { console.log( 'Chatee change:', chatee_map); });
+$.gevent.subscribe ( $t, 'spa-listchange', function( event, changed_list ) { console.log( '*Listchange:', changed_list); });
+
+spa.model.chat.get_chatee();
+
+spa.model.people.login( 'Fanny' );
+spa.model.chat.send_msg( 'Hi Pebbles!' );
+spa.model.chat.send_msg( 'What is up, tricks?' );
+spa.model.chat.set_chatee( 'id_03' );
+spa.model.chat.send_msg( 'Hi Pebbles!' );
+
+//-------------------------------------------------------------------
+// listing 6.10 Test the update_avatar method
+
+var $t = $('<div/>');
+
+$.gevent.subscribe( $t, 'spa-login', function ( event, user ) { console.log('Hello!', user.name);});
+$.gevent.subscribe( $t, 'spa-listchange', function (event, changed_list ) { console.log( '*Listchange:', changed_list ); });
+
+spa.model.people.login( 'Jessy' );
+
+var person = spa.model.people.get_by_cid ( 'id_03' );
+
+JSON.stringify( person.css_map );
+
+spa.model.chat.update_avatar({person_id : 'id_03', css_map : {} });
+
+person = spa.model.people.get_by_cid( 'id_03' );
+JSON.stringify (person.css_map);
+
+
