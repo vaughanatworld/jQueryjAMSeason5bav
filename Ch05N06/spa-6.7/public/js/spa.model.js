@@ -25,7 +25,7 @@ spa.model = (function () {
       is_connected    : false   // flag to indicate if the user is currently
                                 // in the chat room.
     },
-    isFakeData = true,
+    isFakeData = false,
 
     personProto, makeCid, clearPeopleDb, completeLogin,
     makePerson, removePerson, people, chat, initModule,
